@@ -65,13 +65,15 @@ class MemoryAverageCalculator(AverageCalculator):
         self.index = 0
         return 
 
-fac = FileAverageCalculator(open('data.txt'))
-print(fac.average()) # Call the template method
+
+if __name__ == '__main__':
+    fac = FileAverageCalculator(open('data.txt'))
+    print(fac.average()) # Call the template method
 
 
 
-mac = MemoryAverageCalculator([3, 1, 4, 1, 5, 9, 2, 6, 5, 3])
-print(mac.average()) # Call the template method
-print(mac.average()) # Call the template method
+    mac = MemoryAverageCalculator([3, 1, 4, 1, 5, 9, 2, 6, 5, 3])
+    print(mac.average()) # Call the template method
+    print(mac.average()) # Call the template method
 
 
