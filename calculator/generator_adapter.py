@@ -19,7 +19,7 @@ class GeneratorAdapter(object):
             return ''
 
 if __name__ == '__main__':
-    g = (i ** 2  for i in range(10))
+    g = (i  for i in range(1000000))
     ga = GeneratorAdapter(g)
     
     fac_ga = FileAverageCalculator(ga)
