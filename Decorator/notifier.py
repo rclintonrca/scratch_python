@@ -61,17 +61,21 @@ if __name__ == "__main__":
     print(simple.send())
 
     print('\n\n')
-    #DECORATORS
+    
     """
-    We 
+    Decorators allow us to change behavor of an object at run time.
+    Dynamicall. Without affecting other objects of the class
+
+    Here we use feature flags to chose what notifictions we use
+    We could add or remove notifications by removing the decorator and without touching the Notifier class. 
     """
 
     stack: Notifier = simple
     if cmd_args.sms:
-        stack = SMSAlertDecorator(stack, "347.767.0101")
+        stack = SMSAlertDecorator(stack, "101.101.0101")
     
     if cmd_args.email:
-        stack = EMailAlertDecorator(stack, "denis@rcanalytics.com")
+        stack = EMailAlertDecorator(stack, "John@Doe.com")
 
     if cmd_args.batman:
         stack = BatSignalAlertDecorator(stack)
