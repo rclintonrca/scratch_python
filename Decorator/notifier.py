@@ -1,4 +1,12 @@
 from abc import ABC, abstractmethod
+from argparse import ArgumentParser
+import BAT
+def get_args():
+    parser = ArgumentParser()
+    parser.add_argument("--sms", type=bool, nargs='?', const=True, default=False)
+    parser.add_argument("--email", type=bool, nargs='?', const=True, default=False)
+    parser.add_argument("--batman", type=bool, nargs='?', const=True, default=False)
+    return parser.parse_args()
 
 class Notifier(ABC):
     def __init__(self):
@@ -39,18 +47,34 @@ class EMailAlertDecorator(BaseAlertDecorator):
 
 class BatSignalAlertDecorator(BaseAlertDecorator):
     def send(self) -> None:
-        return f"BATMAN HELP! \n\t {self._notifier.send()}"
+        return f"""{BAT.bat}
+    `                     ` \n\t {self._notifier.send()}"""
 
 
 if __name__ == "__main__":
+    cmd_args = get_args()
+
+
     print('\n')
     simple = ConcreteNotifier()
+    print("our undecorated notify will do...")
     print(simple.send())
 
     print('\n\n')
     #DECORATORS
-    sms_alerter = SMSAlertDecorator(simple, "347.767.0101")
-    email_alerter = EMailAlertDecorator(sms_alerter, "denis@rcanalytics.com")
-    bat_signal_alerter = BatSignalAlertDecorator(email_alerter)
+    """
+    We 
+    """
 
-    print(bat_signal_alerter.send())
+    stack: Notifier = simple
+    if cmd_args.sms:
+        stack = SMSAlertDecorator(stack, "347.767.0101")
+    
+    if cmd_args.email:
+        stack = EMailAlertDecorator(stack, "denis@rcanalytics.com")
+
+    if cmd_args.batman:
+        stack = BatSignalAlertDecorator(stack)
+
+    print("WITH FEATURE FLAGS... the decorated notifier will notify...\n")
+    print(stack.send())
